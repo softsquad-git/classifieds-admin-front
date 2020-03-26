@@ -19,17 +19,19 @@ import App from 'app/src/App.vue'
 
 import createRouter from 'app/src/router/index'
 
+import moment from 'vue-moment'
 
+Vue.use(moment);
 
 
 
 export default async function () {
   // create store and router instances
-  
+
   const router = typeof createRouter === 'function'
     ? await createRouter({Vue})
     : createRouter
-  
+
 
   // Create the app instantiation Object.
   // Here we inject the router, store to all child components,
@@ -37,18 +39,18 @@ export default async function () {
   const app = {
     el: '#q-app',
     router,
-    
+    baseURL: Vue.prototype.baseURL = 'http://127.0.0.1:8001/api/',
     render: h => h(App)
   }
 
-  
+
 
   // expose the app, the router and the store.
   // note we are not mounting the app here, since bootstrapping will be
   // different depending on whether we are in a browser or on the server.
   return {
     app,
-    
+
     router
   }
 }
